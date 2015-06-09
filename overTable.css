@@ -1,0 +1,6 @@
+@charset utf-8;
+table.overTable{
+	min-width:400px;
+	border:1px solid #ccc;
+	padding:5px;
+}
