@@ -10,8 +10,13 @@
 	}
 
 	function _overTable (){
-		var cache = {},
-			flyWeightObjects = [];
+		var cache = {},	//
+			flyWeightObjects = [], // a shared pool that maintains all the trs
+			resultMap = {}, // for cached querying
+			pager = {
+				current : 1,
+				total : 1
+			};
 		return {
 			init : function (opts){
 				this.options = extend(defaults, opts);
@@ -38,6 +43,7 @@
 				}
 
 				this.stripped();
+				return flyWeightObjects;
 			},
 			bindEvents : function (){
 
@@ -50,13 +56,15 @@
 				var aTr = byTag('tr', tab);
 				forEach(aTr, function (i, tr){
 					var td = create('td', 'overTable_td');
-					td.innerText = i;
 					append(td, tr);
 					tr.style.height = '20px';
 					if(i & 1){
 						tr.style.backgroundColor = '#ccc';
 					}
 				});
+			},
+			loadData : function (data){
+
 			},
 			reinit : function (){
 
@@ -67,8 +75,12 @@
 			pull : function (){
 
 			},
-			query : function (){
+			query : function (key){
+				if(!resultMap[key]){
+					resultMap[key] = queryKey(key);
+				}
 
+				return resultMap[key];
 			}
 		};
 	}
