@@ -9,11 +9,19 @@
 </body>
 <script type="text/javascript" src="johnTable.js"></script>
 <script type="text/javascript">
+	var repeat = (function(){
+		var join = Array.prototype.join,
+			obj = {};
+		return function (rep, n){
+			return join.call({length:n+1}, rep);
+		}
+	})();
 	window.onload = function (){
 		var t = overTable({
 			width : 400,
 			height : 'auto'
 		});
+		//alert(repeat('john',10));
 	};
 </script>
 </html>
